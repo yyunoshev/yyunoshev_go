@@ -1,0 +1,84 @@
+syntax = "proto3";
+
+package ufo.v1;
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/empty.proto";
+
+
+
+option go_package = "github.com/yyunoshev/yyunoshev_go/week1/grpc/proto/ufo/v1;ufo_v1"; // ufo_v1 - название пакета
+
+
+service UFOService {
+  rpc Create(CreateRequest) returns (CreateResponse);
+  rpc Get(GetRequest) returns (GetResponse);
+  rpc Update(UpdateRequest) returns (google.protobuf.Empty);
+  rpc Delete(DeleteRequest) returns (google.protobuf.Empty);
+}
+
+// SightingInfo базовая информация о наблюдении НЛО
+message SightingInfo {
+  google.protobuf.Timestamp observed_at = 1;
+  string location = 2; // обязаловка
+  string description = 3; // обязаловка
+  google.protobuf.StringValue color = 4; // Опционально
+  google.protobuf.StringValue sound = 5; // Опционально
+  google.protobuf.Int32Value duration_seconds = 6; // Продолжительность наблюдения в секундах (опционально)
+}
+
+message SightingUpdateInfo {
+  google.protobuf.Timestamp observed_at = 1;
+  google.protobuf.StringValue location = 2; // обязаловка
+  google.protobuf.StringValue description = 3; // обязаловка
+  google.protobuf.StringValue color = 4; // Опционально
+  google.protobuf.StringValue sound = 5; // Опционально
+  google.protobuf.Int32Value duration_seconds = 6; // Продолжительность наблюдения в секундах (опционально)
+}
+
+message Sighting {
+  // uuid уникальный идентификатор наблюдения
+  string uuid = 1;
+
+  // Общая информация о наблюдении
+  SightingInfo info = 2;
+
+  // created_at время создания записи
+  google.protobuf.Timestamp created_at = 3;
+
+  // updated_at время последнего обновления записи
+  google.protobuf.Timestamp updated_at = 4;
+
+  // deleted_at время удаления записи (опционально)
+  google.protobuf.Timestamp deleted_at = 5;
+}
+
+
+message CreateRequest {
+  SightingInfo info = 1;
+}
+
+message CreateResponse {
+  string uuid = 1;
+}
+
+message GetRequest {
+  string uuid = 1;
+}
+
+message GetResponse {
+  Sighting sighting = 1;
+}
+
+
+
+message UpdateRequest {
+  string uuid = 1;
+
+  SightingUpdateInfo update_info = 2;
+}
+
+message DeleteRequest {
+  string uuid = 1;
+}
