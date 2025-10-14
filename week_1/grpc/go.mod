@@ -3,6 +3,8 @@ module github.com/yyunoshev/yyunoshev_go/week_1/grpc
 go 1.24.7
 
 require (
+	github.com/brianvoe/gofakeit/v7 v7.2.1
+	github.com/google/uuid v1.6.0
 	google.golang.org/grpc v1.76.0
 	google.golang.org/protobuf v1.36.10
 )
